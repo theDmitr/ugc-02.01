@@ -1,5 +1,6 @@
 package dmitr.app;
 
+import dmitr.app.database.DatabaseHelper;
 import dmitr.app.model.Record;
 import dmitr.app.model.Task;
 import dmitr.app.scene.SceneController;
@@ -19,6 +20,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws Exception {
         SceneController.init(stage);
         SceneController.setScene(StageScene.MENU);
+        var result = DatabaseHelper.getInstance();
     }
 
     public static void main(String[] args) {

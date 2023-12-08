@@ -25,7 +25,8 @@ javafx {
 }
 
 dependencies {
-
+    implementation 'com.j256.ormlite:ormlite-jdbc:6.1'
+    implementation 'org.xerial:sqlite-jdbc:3.42.0.0'
 }
 
 compileJava.options.encoding = 'UTF-8'

@@ -1,16 +1,35 @@
 package dmitr.app.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
+@DatabaseTable(tableName = "records")
 public class Record {
 
+    @DatabaseField(generatedId = true)
+    private long id;
+
+    @DatabaseField(canBeNull = false)
     private Date createDate;
+
+    @DatabaseField(canBeNull = false)
     private String name;
-    private List<String> tags;
+
+    @DatabaseField(canBeNull = false)
+    private String tags;
+
+    @DatabaseField(canBeNull = false)
     private String description;
 
-    public Record(Date createDate, String name, List<String> tags, String description) {
+    public Record() {
+
+    }
+
+    public Record(Date createDate, String name, String tags, String description) {
         this.createDate = createDate;
         this.name = name;
         this.tags = tags;
@@ -25,7 +44,7 @@ public class Record {
         return name;
     }
 
-    public List<String> getTags() {
+    public String getTags() {
         return tags;
     }
 
@@ -41,7 +60,7 @@ public class Record {
         this.name = name;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 
