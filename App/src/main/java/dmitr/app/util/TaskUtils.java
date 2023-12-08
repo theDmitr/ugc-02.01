@@ -17,7 +17,7 @@ public class TaskUtils {
     }
 
     public static String remainDateToString(Task task) {
-        return task.getCompletionDate() != null ? "" : Long.toString(TaskUtils.getBetweenDays(task));
+        return task.getCompletionDate() != null ? "" : Long.toString(getBetweenDays(task));
     }
 
     public static String plannedCompletionDateToString(Task task) {
