@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+group 'dmitr.app'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = '20'
+targetCompatibility = '20'
+
+application {
+    mainModule = 'dmitr.app'
+    mainClass = 'dmitr.app.MainApplication'
+}
+
+javafx {
+    version = '20.0.1'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+
+}
+
+compileJava.options.encoding = 'UTF-8'
