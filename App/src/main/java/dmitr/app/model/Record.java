@@ -4,8 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
 
 @DatabaseTable(tableName = "records")
 public class Record {
@@ -40,28 +38,28 @@ public class Record {
         return createDate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {

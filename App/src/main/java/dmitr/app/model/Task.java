@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Date;
-import java.util.List;
 
 @DatabaseTable(tableName = "tasks")
 public class Task extends Record {

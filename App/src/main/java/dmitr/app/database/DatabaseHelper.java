@@ -36,6 +36,10 @@ public class DatabaseHelper {
         setupDao();
     }
 
+    public static DatabaseHelper getInstance() {
+        return INSTANCE;
+    }
+
     private void setupTables() throws SQLException {
         TableUtils.createTableIfNotExists(connectionSource, Record.class);
         TableUtils.createTableIfNotExists(connectionSource, Task.class);
@@ -44,10 +48,6 @@ public class DatabaseHelper {
     private void setupDao() throws SQLException {
         recordsDao = DaoManager.createDao(connectionSource, Record.class);
         tasksDao = DaoManager.createDao(connectionSource, Task.class);
-    }
-
-    public static DatabaseHelper getInstance() {
-        return INSTANCE;
     }
 
     public Dao<Record, Integer> getRecordsDao() {
