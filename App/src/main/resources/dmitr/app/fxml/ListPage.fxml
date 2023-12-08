@@ -10,13 +10,27 @@
             fx:controller="dmitr.app.controller.ListPageController">
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="recordsTableView" prefHeight="200.0" prefWidth="200.0">
                 <columns>
                     <TableColumn fx:id="nameColumn" text="Name"/>
                     <TableColumn fx:id="tagsColumn" text="Tags"/>
                     <TableColumn fx:id="createDateColumn" text="Creation date"/>
+                    <TableColumn fx:id="plannedCompletionDateColumn" text="Planned completion date"/>
+                    <TableColumn fx:id="remainDaysColumn" text="Remain days"/>
                     <TableColumn fx:id="completionDateColumn" text="Completion date"/>
                 </columns>
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem fx:id="openRecordItem" />
+                            <SeparatorMenuItem />
+                            <MenuItem fx:id="addRecordItem" />
+                            <MenuItem fx:id="addTaskItem" />
+                            <SeparatorMenuItem />
+                            <MenuItem fx:id="removeRecordItem" />
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                 </columnResizePolicy>

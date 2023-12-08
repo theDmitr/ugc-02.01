@@ -9,18 +9,30 @@ import java.sql.Date;
 public class Task extends Record {
 
     @DatabaseField(canBeNull = false)
+    private Date plannedCompletionDate;
+
+    @DatabaseField()
     private Date completionDate;
 
     public Task() {
 
     }
 
-    public Task(Date createDate, String name, String tags, String description, Date completionDate) {
+    public Task(Date createDate, String name, String tags, String description, Date plannedCompletionDate) {
         super(createDate, name, tags, description);
+        this.plannedCompletionDate = plannedCompletionDate;
+    }
+
+    public Date getPlannedCompletionDate() {
+        return plannedCompletionDate;
     }
 
     public Date getCompletionDate() {
         return completionDate;
+    }
+
+    public void setPlannedCompletionDate(Date plannedCompletionDate) {
+        this.plannedCompletionDate = plannedCompletionDate;
     }
 
     public void setCompletionDate(Date completionDate) {
