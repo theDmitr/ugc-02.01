@@ -22,12 +22,12 @@
                 <contextMenu>
                     <ContextMenu>
                         <items>
-                            <MenuItem fx:id="openRecordItem" />
-                            <SeparatorMenuItem />
-                            <MenuItem fx:id="addRecordItem" />
-                            <MenuItem fx:id="addTaskItem" />
-                            <SeparatorMenuItem />
-                            <MenuItem fx:id="removeRecordItem" />
+                            <MenuItem fx:id="openRecordItem"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem fx:id="addRecordItem"/>
+                            <MenuItem fx:id="addTaskItem"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem fx:id="removeRecordItem"/>
                         </items>
                     </ContextMenu>
                 </contextMenu>

@@ -1,7 +1,5 @@
 package dmitr.app.util;
 
-import java.sql.Date;
-import java.time.Duration;
 import java.time.LocalDate;
 
 import static java.util.concurrent.TimeUnit.DAYS;

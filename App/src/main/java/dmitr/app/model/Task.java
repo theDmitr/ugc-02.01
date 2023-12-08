@@ -27,12 +27,12 @@ public class Task extends Record {
         return plannedCompletionDate;
     }
 
-    public Date getCompletionDate() {
-        return completionDate;
-    }
-
     public void setPlannedCompletionDate(Date plannedCompletionDate) {
         this.plannedCompletionDate = plannedCompletionDate;
+    }
+
+    public Date getCompletionDate() {
+        return completionDate;
     }
 
     public void setCompletionDate(Date completionDate) {

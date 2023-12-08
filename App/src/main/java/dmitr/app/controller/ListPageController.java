@@ -1,12 +1,9 @@
 package dmitr.app.controller;
 
-import dmitr.app.database.DatabaseHelper;
 import dmitr.app.model.Record;
 import dmitr.app.model.Task;
-import dmitr.app.util.DateUtils;
 import dmitr.app.util.TaskUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -14,9 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.net.URL;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ListPageController implements Initializable {
@@ -61,6 +55,7 @@ public class ListPageController implements Initializable {
     private void addRecord() {
 
     }
+
     private void addTask() {
 
     }
