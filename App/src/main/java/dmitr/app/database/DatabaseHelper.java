@@ -5,6 +5,10 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import dmitr.app.dao.RecordDao;
+import dmitr.app.dao.RecordDaoImpl;
+import dmitr.app.dao.TaskDao;
+import dmitr.app.dao.TaskDaoImpl;
 import dmitr.app.model.Record;
 import dmitr.app.model.Task;
 
@@ -26,8 +30,8 @@ public class DatabaseHelper {
 
     private final ConnectionSource connectionSource;
 
-    private Dao<Record, Integer> recordsDao;
-    private Dao<Task, Integer> tasksDao;
+    private RecordDaoImpl recordDao;
+    private TaskDao taskDao;
 
     private DatabaseHelper() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
@@ -46,16 +50,16 @@ public class DatabaseHelper {
     }
 
     private void setupDao() throws SQLException {
-        recordsDao = DaoManager.createDao(connectionSource, Record.class);
-        tasksDao = DaoManager.createDao(connectionSource, Task.class);
+        recordDao = new RecordDaoImpl(connectionSource);
+        taskDao = new TaskDaoImpl(connectionSource);
     }
 
-    public Dao<Record, Integer> getRecordsDao() {
-        return recordsDao;
+    public RecordDao getRecordDao() {
+        return recordDao;
     }
 
-    public Dao<Task, Integer> getTasksDao() {
-        return tasksDao;
+    public TaskDao getTaskDao() {
+        return taskDao;
     }
 
 }

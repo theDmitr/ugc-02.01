@@ -1,17 +1,23 @@
 package dmitr.app.controller;
 
+import dmitr.app.database.DatabaseHelper;
 import dmitr.app.model.Record;
 import dmitr.app.model.Task;
 import dmitr.app.util.TaskUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ListPageController implements Initializable {
 
@@ -48,6 +54,12 @@ public class ListPageController implements Initializable {
     @FXML
     private MenuItem removeRecordItem;
 
+    @FXML
+    private CheckBox recordsCheckBox;
+
+    @FXML
+    private CheckBox tasksCheckBox;
+
     private void openRecordItem() {
 
     }
@@ -61,11 +73,32 @@ public class ListPageController implements Initializable {
     }
 
     private void removeRecord() {
+        Record selected = recordsTableView.getSelectionModel().getSelectedItem();
 
+        if (selected == null) {
+            new Alert(Alert.AlertType.ERROR, "Select item!", ButtonType.OK).showAndWait();
+            return;
+        }
+
+        if (
+                new Alert(Alert.AlertType.CONFIRMATION, "Select item!", ButtonType.YES, ButtonType.NO)
+                .showAndWait().get() == ButtonType.NO
+        )
+            return;
+
+        if (selected.getClass() == Task.class) {
+            DatabaseHelper.getInstance().getTaskDao().remove((Task) selected);
+        } else {
+            DatabaseHelper.getInstance().getRecordDao().remove(selected);
+        }
+
+        updateRecordsTable();
     }
 
     private void applyActions() {
         removeRecordItem.setOnAction(event -> removeRecord());
+        recordsCheckBox.setOnAction(event -> updateRecordsTable());
+        tasksCheckBox.setOnAction(event -> updateRecordsTable());
     }
 
     private void buildRecordsTable() {
@@ -95,10 +128,23 @@ public class ListPageController implements Initializable {
         );
     }
 
+    private void updateRecordsTable() {
+        boolean recordsShow = recordsCheckBox.isSelected();
+        boolean tasksShow = tasksCheckBox.isSelected();
+
+        List<Record> records = recordsShow ? DatabaseHelper.getInstance().getRecordDao().getAll() : new ArrayList<>();
+        List<Task> tasks = tasksShow ? DatabaseHelper.getInstance().getTaskDao().getAll() : new ArrayList<>();
+        List<Record> concat = Stream.concat(records.stream(), tasks.stream()).toList();
+
+        ObservableList<Record> items = FXCollections.observableList(concat);
+        recordsTableView.setItems(items);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         applyActions();
         buildRecordsTable();
+        updateRecordsTable();
     }
 
 }
