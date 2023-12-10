@@ -9,14 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ListPageController implements Initializable {
@@ -43,22 +41,54 @@ public class ListPageController implements Initializable {
     private TableColumn<Record, String> completionDateColumn;
 
     @FXML
-    private MenuItem openRecordItem;
+    private CheckBox filterCheckBox;
 
     @FXML
-    private MenuItem addRecordItem;
-
-    @FXML
-    private MenuItem addTaskItem;
-
-    @FXML
-    private MenuItem removeRecordItem;
+    private CheckBox typeFilterCheckBox;
 
     @FXML
     private CheckBox recordsCheckBox;
 
     @FXML
     private CheckBox tasksCheckBox;
+
+    @FXML
+    private CheckBox nameFilterCheckBox;
+
+    @FXML
+    private TextField nameTextField;
+
+    @FXML
+    private CheckBox tagsFilterCheckBox;
+
+    @FXML
+    private TextField tagsTextField;
+
+    @FXML
+    private CheckBox creationDateFilter;
+
+    @FXML
+    private DatePicker creationDatePicker;
+
+    @FXML
+    private CheckBox plannedCompletionDateFilter;
+
+    @FXML
+    private DatePicker plannedCompletionDatePicker;
+
+    @FXML
+    private CheckBox completionDateFilter;
+
+    @FXML
+    private DatePicker completionDatePicker;
+
+    @FXML
+    private CheckBox remainDaysFilter;
+
+    @FXML
+    private TextField remainDaysTextField;
+
+    private ObservableList<Record> records;
 
     private void openRecordItem() {
 
@@ -72,6 +102,7 @@ public class ListPageController implements Initializable {
 
     }
 
+    @FXML
     private void removeRecord() {
         Record selected = recordsTableView.getSelectionModel().getSelectedItem();
 
@@ -80,71 +111,113 @@ public class ListPageController implements Initializable {
             return;
         }
 
-        if (
-                new Alert(Alert.AlertType.CONFIRMATION, "Select item!", ButtonType.YES, ButtonType.NO)
-                .showAndWait().get() == ButtonType.NO
-        )
+        if (new Alert(Alert.AlertType.CONFIRMATION, "Remove item?", ButtonType.YES, ButtonType.NO)
+                .showAndWait().get() == ButtonType.NO)
             return;
 
-        if (selected.getClass() == Task.class) {
-            DatabaseHelper.getInstance().getTaskDao().remove((Task) selected);
-        } else {
+        if (selected instanceof Task t)
+            DatabaseHelper.getInstance().getTaskDao().remove(t);
+        else
             DatabaseHelper.getInstance().getRecordDao().remove(selected);
-        }
 
-        updateRecordsTable();
+        fillRecords();
     }
 
-    private void applyActions() {
-        removeRecordItem.setOnAction(event -> removeRecord());
-        recordsCheckBox.setOnAction(event -> updateRecordsTable());
-        tasksCheckBox.setOnAction(event -> updateRecordsTable());
+    @FXML
+    private void filterAllRecords() {
+        recordsTableView.setItems(records);
+    }
+
+    @FXML
+    private void filterTodayRecords() {
+        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> record.getCreateDate()
+                .equals(Date.valueOf(LocalDate.now())))));
+    }
+
+    @FXML
+    private void filterYesterdayRecords() {
+        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> record.getCreateDate()
+                .equals(Date.valueOf(LocalDate.now().minusDays(1))))));
     }
 
     private void buildRecordsTable() {
-        nameColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(c.getValue().getName())
-        );
-        tagsColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(c.getValue().getTags())
-        );
-        createDateColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(c.getValue().getCreateDate().toString())
-        );
-        plannedCompletionDateColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(
-                        c.getValue().getClass() == Task.class ? TaskUtils.plannedCompletionDateToString((Task) c.getValue()) : ""
-                )
-        );
-        remainDaysColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(
-                        c.getValue().getClass() == Task.class ? TaskUtils.remainDateToString((Task) c.getValue()) : ""
-                )
-        );
-        completionDateColumn.setCellValueFactory(
-                c -> new ReadOnlyStringWrapper(
-                        c.getValue().getClass() == Task.class ? TaskUtils.completionDateToString((Task) c.getValue()) : ""
-                )
-        );
+        nameColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getName()));
+        tagsColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getTags()));
+        createDateColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getCreateDate().toString()));
+        plannedCompletionDateColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(TaskUtils.plannedCompletionDateToString(c.getValue())));
+        remainDaysColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(TaskUtils.remainDateToString(c.getValue())));
+        completionDateColumn.setCellValueFactory(c -> new ReadOnlyStringWrapper(TaskUtils.completionDateToString(c.getValue())));
     }
 
+    @FXML
     private void updateRecordsTable() {
-        boolean recordsShow = recordsCheckBox.isSelected();
-        boolean tasksShow = tasksCheckBox.isSelected();
+        if (!filterCheckBox.isSelected())
+            filterAllRecords();
 
-        List<Record> records = recordsShow ? DatabaseHelper.getInstance().getRecordDao().getAll() : new ArrayList<>();
-        List<Task> tasks = tasksShow ? DatabaseHelper.getInstance().getTaskDao().getAll() : new ArrayList<>();
-        List<Record> concat = Stream.concat(records.stream(), tasks.stream()).toList();
+        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> {
+            boolean isTask = record instanceof Task;
 
-        ObservableList<Record> items = FXCollections.observableList(concat);
-        recordsTableView.setItems(items);
+            if (typeFilterCheckBox.isSelected() && (
+                    isTask && !tasksCheckBox.isSelected() || !isTask && !recordsCheckBox.isSelected()))
+                return false;
+
+            if (nameFilterCheckBox.isSelected() && !record.getName().contains(nameTextField.getText()))
+                return false;
+
+            if (tagsFilterCheckBox.isSelected() && !record.getTags().contains(tagsTextField.getText()))
+                return false;
+
+            if (creationDateFilter.isSelected() && (
+                    record.getCreateDate() == null ||
+                            (creationDatePicker.getValue() != null &&
+                            !record.getCreateDate().equals(Date.valueOf(creationDatePicker.getValue()))))) {
+                return false;
+            }
+
+            if (!isTask)
+                return true;
+
+            Task task = (Task) record;
+
+            if (plannedCompletionDateFilter.isSelected() && (
+                    task.getPlannedCompletionDate() == null ||
+                            (plannedCompletionDatePicker.getValue() != null &&
+                                    !task.getPlannedCompletionDate().equals(Date.valueOf(plannedCompletionDatePicker.getValue())))))
+                return false;
+
+            if (completionDateFilter.isSelected() && (
+                    task.getCompletionDate() == null ||
+                            (completionDatePicker.getValue() != null &&
+                                    !task.getCompletionDate().equals(Date.valueOf(completionDatePicker.getValue())))))
+                return false;
+
+            if (remainDaysFilter.isSelected() &&
+                    (task.getCompletionDate() == null &&
+                            !remainDaysTextField.getText().isEmpty() &&
+                            remainDaysTextField.getText().length() < 9 &&
+                            Integer.parseInt(remainDaysTextField.getText()) != TaskUtils.getBetweenDays(task)))
+                return false;
+
+            return true;
+        })));
+    }
+
+    private void fillRecords() {
+        this.records = FXCollections.observableArrayList(Stream.concat(
+                DatabaseHelper.getInstance().getRecordDao().getAll().stream(),
+                DatabaseHelper.getInstance().getTaskDao().getAll().stream()).toList());
+        filterAllRecords();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        applyActions();
+        remainDaysTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*"))
+                remainDaysTextField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+
         buildRecordsTable();
-        updateRecordsTable();
+        fillRecords();
     }
 
 }

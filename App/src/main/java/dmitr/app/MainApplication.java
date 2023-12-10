@@ -9,6 +9,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class MainApplication extends Application {
 
@@ -20,8 +23,8 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws Exception {
         SceneController.init(stage);
         SceneController.setScene(StageScene.MENU);
-        DatabaseHelper.getInstance().getRecordDao().createOrUpdate(new Record(new Date(1, 1, 1), "123", "123 123 123", "123123123123123123"));
-        DatabaseHelper.getInstance().getTaskDao().createOrUpdate(new Task(new Date(1, 1, 1), "123", "123 123 123", "123123123123123123", new Date(2, 2, 2)));
+        DatabaseHelper.getInstance().getRecordDao().createOrUpdate(new Record(Date.valueOf(LocalDate.now()), "asd", "123 123 123", "123123123123123123"));
+        DatabaseHelper.getInstance().getTaskDao().createOrUpdate(new Task(Date.valueOf(LocalDate.now().minusDays(1)), "asd", "123 123 123", "123123123123123123", new Date(2, 2, 2)));
     }
 
 }

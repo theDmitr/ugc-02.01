@@ -1,5 +1,6 @@
 package dmitr.app.util;
 
+import dmitr.app.model.Record;
 import dmitr.app.model.Task;
 
 import java.sql.Date;
@@ -11,17 +12,16 @@ public class TaskUtils {
         return DateUtils.getDaysBetweenDates(LocalDate.now(), task.getPlannedCompletionDate().toLocalDate());
     }
 
-    public static String completionDateToString(Task task) {
-        Date date = task.getCompletionDate();
-        return date != null ? date.toString() : "";
+    public static String completionDateToString(Record record) {
+        return record instanceof Task t && t.getCompletionDate() != null ? t.getCompletionDate().toString() : "";
     }
 
-    public static String remainDateToString(Task task) {
-        return task.getCompletionDate() != null ? "" : Long.toString(getBetweenDays(task));
+    public static String remainDateToString(Record record) {
+        return record instanceof Task t && t.getCompletionDate() != null ? Long.toString(getBetweenDays(t)) : "";
     }
 
-    public static String plannedCompletionDateToString(Task task) {
-        return task.getPlannedCompletionDate().toString();
+    public static String plannedCompletionDateToString(Record record) {
+        return record instanceof Task t ? t.getPlannedCompletionDate().toString() : "";
     }
 
 }
