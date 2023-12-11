@@ -41,9 +41,6 @@ public class ListPageController implements Initializable {
     private TableColumn<Record, String> completionDateColumn;
 
     @FXML
-    private CheckBox filterCheckBox;
-
-    @FXML
     private CheckBox typeFilterCheckBox;
 
     @FXML
@@ -90,6 +87,7 @@ public class ListPageController implements Initializable {
 
     private ObservableList<Record> records;
 
+    @FXML
     private void openRecordItem() {
 
     }
@@ -130,13 +128,13 @@ public class ListPageController implements Initializable {
 
     @FXML
     private void filterTodayRecords() {
-        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> record.getCreateDate()
+        recordsTableView.setItems(FXCollections.observableArrayList(records.filtered(record -> record.getCreateDate()
                 .equals(Date.valueOf(LocalDate.now())))));
     }
 
     @FXML
     private void filterYesterdayRecords() {
-        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> record.getCreateDate()
+        recordsTableView.setItems(FXCollections.observableArrayList(records.filtered(record -> record.getCreateDate()
                 .equals(Date.valueOf(LocalDate.now().minusDays(1))))));
     }
 
@@ -151,10 +149,7 @@ public class ListPageController implements Initializable {
 
     @FXML
     private void updateRecordsTable() {
-        if (!filterCheckBox.isSelected())
-            filterAllRecords();
-
-        recordsTableView.setItems(FXCollections.observableList(records.filtered(record -> {
+        recordsTableView.setItems(FXCollections.observableArrayList(records.stream().filter(record -> {
             boolean isTask = record instanceof Task;
 
             if (typeFilterCheckBox.isSelected() && (
@@ -199,7 +194,7 @@ public class ListPageController implements Initializable {
                 return false;
 
             return true;
-        })));
+        }).toList()));
     }
 
     private void fillRecords() {

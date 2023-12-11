@@ -6,6 +6,8 @@ module dmitr.app {
     requires org.xerial.sqlitejdbc;
     requires ormlite.jdbc;
 
+    requires atlantafx.base;
+
     opens dmitr.app to javafx.fxml;
 
     exports dmitr.app;

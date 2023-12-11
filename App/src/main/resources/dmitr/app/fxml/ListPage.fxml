@@ -4,77 +4,77 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dmitr.app.controller.ListPageController">
+<BorderPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dmitr.app.controller.ListPageController">
     <center>
             <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-                 <TitledPane text="Filter" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
-                     <graphic>
-                         <CheckBox fx:id="filterCheckBox" onAction="#updateRecordsTable" />
-                     </graphic>
-                     <ScrollPane fitToHeight="true" fitToWidth="true">
-                         <VBox spacing="10">
-                             <TitledPane expanded="false" text="Fast filters" VBox.vgrow="ALWAYS">
-                                 <VBox alignment="CENTER_LEFT" spacing="10">
-                                     <Button fx:id="allRecordsButton" onAction="#filterAllRecords" text="All records" />
-                                     <Button fx:id="todayRecordsButton" onAction="#filterTodayRecords" text="All today records" />
-                                     <Button fx:id="yesterdayRecordsButton" onAction="#filterYesterdayRecords" text="All yesterday records" />
-                                 </VBox>
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record type" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="typeFilterCheckBox" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <VBox alignment="CENTER_LEFT" spacing="10">
-                                     <CheckBox fx:id="recordsCheckBox" onAction="#updateRecordsTable" text="Records" />
-                                     <CheckBox fx:id="tasksCheckBox" onAction="#updateRecordsTable" text="Tasks" />
-                                 </VBox>
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record name" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="nameFilterCheckBox" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <TextField fx:id="nameTextField" onAction="#updateRecordsTable" />
-                                 <VBox.margin>
-                                     <Insets />
-                                 </VBox.margin>
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record tags" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="tagsFilterCheckBox" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <TextField fx:id="tagsTextField" onAction="#updateRecordsTable" />
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record creation date" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="creationDateFilter" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <DatePicker fx:id="creationDatePicker" onAction="#updateRecordsTable" editable="false" />
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record planned completion date" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="plannedCompletionDateFilter" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <DatePicker fx:id="plannedCompletionDatePicker" onAction="#updateRecordsTable" editable="false" />
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record remain days" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="remainDaysFilter" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <TextField fx:id="remainDaysTextField" onAction="#updateRecordsTable" />
-                             </TitledPane>
-                             <TitledPane expanded="false" text="Record completion date" VBox.vgrow="ALWAYS">
-                                 <graphic>
-                                     <CheckBox fx:id="completionDateFilter" onAction="#updateRecordsTable" />
-                                 </graphic>
-                                 <DatePicker fx:id="completionDatePicker" onAction="#updateRecordsTable" editable="false" />
-                             </TitledPane>
-                         </VBox>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-                     </ScrollPane>
+         <BorderPane HBox.hgrow="ALWAYS">
+             <center>
 
-                 </TitledPane>
+                 <ScrollPane fitToHeight="true" fitToWidth="true">
+                     <VBox spacing="10">
+                         <TitledPane text="Fast filters" VBox.vgrow="ALWAYS">
+                             <VBox alignment="CENTER_LEFT" spacing="10">
+                                 <Button alignment="CENTER" contentDisplay="CENTER" onAction="#filterAllRecords" text="All records" VBox.vgrow="ALWAYS" />
+                                 <Button alignment="CENTER" contentDisplay="CENTER" onAction="#filterTodayRecords" text="All today records" VBox.vgrow="ALWAYS" />
+                                 <Button alignment="CENTER" contentDisplay="CENTER" onAction="#filterYesterdayRecords" text="All yesterday records" VBox.vgrow="ALWAYS" />
+                             </VBox>
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record type" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="typeFilterCheckBox" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <VBox alignment="CENTER_LEFT" spacing="10">
+                                 <CheckBox fx:id="recordsCheckBox" onAction="#updateRecordsTable" text="Records" />
+                                 <CheckBox fx:id="tasksCheckBox" onAction="#updateRecordsTable" text="Tasks" />
+                             </VBox>
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record name" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="nameFilterCheckBox" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <TextField fx:id="nameTextField" onAction="#updateRecordsTable" />
+                             <VBox.margin>
+                                 <Insets />
+                             </VBox.margin>
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record tags" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="tagsFilterCheckBox" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <TextField fx:id="tagsTextField" onAction="#updateRecordsTable" />
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record creation date" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="creationDateFilter" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <DatePicker fx:id="creationDatePicker" editable="false" onAction="#updateRecordsTable" />
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record planned completion date" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="plannedCompletionDateFilter" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <DatePicker fx:id="plannedCompletionDatePicker" editable="false" onAction="#updateRecordsTable" />
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record remain days" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="remainDaysFilter" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <TextField fx:id="remainDaysTextField" onAction="#updateRecordsTable" />
+                         </TitledPane>
+                         <TitledPane expanded="false" text="Record completion date" VBox.vgrow="ALWAYS">
+                             <graphic>
+                                 <CheckBox fx:id="completionDateFilter" onAction="#updateRecordsTable" />
+                             </graphic>
+                             <DatePicker fx:id="completionDatePicker" editable="false" onAction="#updateRecordsTable" />
+                         </TitledPane>
+                     </VBox>
+                     <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                 </ScrollPane>
+
+             </center>
+         </BorderPane>
                 <TableView fx:id="recordsTableView" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="nameColumn" text="Name" />
@@ -89,10 +89,10 @@
                             <items>
                                 <MenuItem fx:id="openRecordItem" text="More details" />
                                 <SeparatorMenuItem />
-                                <MenuItem fx:id="addRecordItem" text="Add Record" />
-                                <MenuItem fx:id="addTaskItem" text="Add Task" />
+                                <MenuItem text="Add Record" />
+                                <MenuItem text="Add Task" />
                                 <SeparatorMenuItem />
-                                <MenuItem fx:id="removeRecordItem" onAction="#removeRecord" text="Remove" />
+                                <MenuItem onAction="#removeRecord" text="Remove" />
                             </items>
                         </ContextMenu>
                     </contextMenu>
