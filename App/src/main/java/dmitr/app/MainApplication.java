@@ -1,6 +1,6 @@
 package dmitr.app;
 
-import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.PrimerDark;
 import dmitr.app.database.DatabaseHelper;
 import dmitr.app.model.Record;
 import dmitr.app.model.Task;
@@ -20,7 +20,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
 
         SceneController.init(stage);
         SceneController.setScene(StageScene.MENU);
