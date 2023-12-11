@@ -8,6 +8,11 @@ import java.util.List;
 public interface TaskDao extends Dao<Task, Long> {
 
     List<Task> getAll();
-    void remove(Task task);
+
+    void tryDelete(Task task);
+
+    void tryCreate(Task task);
+
+    void tryUpdate(Task task);
 
 }

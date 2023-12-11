@@ -18,8 +18,8 @@ public class Task extends Record {
 
     }
 
-    public Task(Date createDate, String name, String tags, String description, Date plannedCompletionDate) {
-        super(createDate, name, tags, description);
+    public Task(Date createDate, String name, String description, String tags, Date plannedCompletionDate) {
+        super(createDate, name, description, tags);
         this.plannedCompletionDate = plannedCompletionDate;
     }
 

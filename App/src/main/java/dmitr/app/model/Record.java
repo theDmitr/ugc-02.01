@@ -27,11 +27,11 @@ public class Record {
 
     }
 
-    public Record(Date createDate, String name, String tags, String description) {
+    public Record(Date createDate, String name, String description, String tags) {
         this.createDate = createDate;
         this.name = name;
-        this.tags = tags;
         this.description = description;
+        this.tags = tags;
     }
 
     public Date getCreateDate() {

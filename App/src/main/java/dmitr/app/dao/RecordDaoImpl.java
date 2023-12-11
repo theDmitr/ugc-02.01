@@ -23,9 +23,27 @@ public class RecordDaoImpl extends BaseDaoImpl<Record, Long> implements RecordDa
     }
 
     @Override
-    public void remove(Record record) {
+    public void tryDelete(Record record) {
         try {
             super.delete(record);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void tryCreate(Record record) {
+        try {
+            super.create(record);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void tryUpdate(Record record) {
+        try {
+            super.update(record);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

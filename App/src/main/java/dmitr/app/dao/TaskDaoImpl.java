@@ -23,9 +23,27 @@ public class TaskDaoImpl extends BaseDaoImpl<Task, Long> implements TaskDao {
     }
 
     @Override
-    public void remove(Task task) {
+    public void tryDelete(Task task) {
         try {
             super.delete(task);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void tryCreate(Task task) {
+        try {
+            super.create(task);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void tryUpdate(Task task) {
+        try {
+            super.update(task);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

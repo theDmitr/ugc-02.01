@@ -9,7 +9,11 @@ import java.net.URL;
 
 public enum StageScene {
     MENU("Records/Tasks | Menu", "fxml/Menu.fxml"),
-    LIST_PAGE("Records/Tasks | List", "fxml/ListPage.fxml");
+    LIST_PAGE("Records/Tasks | List", "fxml/ListPage.fxml"),
+    CREATE_RECORD("Records/Tasks | Create Record", "fxml/CreateRecord.fxml"),
+    CREATE_TASK("Records/Tasks | Create Task", "fxml/CreateTask.fxml"),
+    EDIT_RECORD("Records/Tasks | Edit Record", "fxml/EditRecord.fxml"),
+    EDIT_TASK("Records/Tasks | Edit Task", "fxml/EditTask.fxml");
 
     private final String caption;
     private final URL sceneFile;
@@ -26,15 +30,11 @@ public enum StageScene {
     public Scene getScene() {
         FXMLLoader loader = new FXMLLoader(sceneFile);
 
-        javafx.scene.Scene stageScene;
-
         try {
-            stageScene = new javafx.scene.Scene(loader.load());
+            return new javafx.scene.Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return stageScene;
     }
 
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="dmitr.app.controller.EditTaskController">
+    <center>
+        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" spacing="10.0">
+                <VBox alignment="CENTER" fillWidth="false">
+                    <Label text="Name"/>
+                    <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="200.0"/>
+                </VBox>
+                <VBox alignment="CENTER" fillWidth="false" layoutX="10.0" layoutY="10.0">
+                    <Label text="Planned Completion Date"/>
+                    <DatePicker fx:id="plannedCompletionDatePicker" prefHeight="25.0" prefWidth="200.0"/>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0">
+                <VBox alignment="CENTER" layoutX="376.0" layoutY="10.0" spacing="5.0">
+                    <Label text="Description" textAlignment="CENTER"/>
+                    <TextArea fx:id="descriptionTextArea" prefHeight="180.0" prefWidth="200.0"/>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="265.0" layoutY="10.0" spacing="5.0">
+                    <Label text="Tags" textAlignment="CENTER"/>
+                    <TextArea fx:id="tagsTextArea" prefHeight="180.0" prefWidth="200.0"/>
+                </VBox>
+            </HBox>
+            <CheckBox fx:id="completedCheckBox" mnemonicParsing="false" text="Completed"/>
+            <HBox alignment="CENTER" spacing="10.0">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+                <Button mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="200.0" text="Cancel"
+                        HBox.hgrow="ALWAYS"/>
+                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0"
+                        prefWidth="200.0" text="Save" HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

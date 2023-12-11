@@ -8,6 +8,11 @@ import java.util.List;
 public interface RecordDao extends Dao<Record, Long> {
 
     List<Record> getAll();
-    void remove(Record record);
+
+    void tryDelete(Record record);
+
+    void tryCreate(Record record);
+
+    void tryUpdate(Record record);
 
 }
